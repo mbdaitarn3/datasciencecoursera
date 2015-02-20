@@ -118,7 +118,7 @@ data = rbind(test_data, train_data)
 
 
 # To generate tidy data 
-# i wil use the package sqldf with SQL and Group by
+# i wil use the package sqldf with SQL and GROUP BY
 
 
  cln  = names(data)
@@ -134,9 +134,9 @@ data = rbind(test_data, train_data)
 # In the cfields we paste the dynamic sql for every column
 for (i in 4:ncln ) {
   if (i==ncln)  {
-   cfields = paste(cfields,'avg(\"',cln[i],'\")',sep="")
+   cfields = paste(cfields,'avg(',cln[i],')',sep="")
   } else { 
-   cfields = paste(cfields,'avg(\"',cln[i],'\"),',sep="") 
+   cfields = paste(cfields,'avg(',cln[i],'),',sep="") 
   } 
 }
 
