@@ -117,12 +117,8 @@ train_data <- cbind(as.data.table(subject_train), y_train, X_train)
 data = rbind(test_data, train_data)
 
 
-# Apply mean function to dataset using dcast function
-# the function dcast for the couple subject + activity_label aggregate all the measure with the mean
-# Is similar to GROUP BY in SQL.
-# try to :
-# rowTot <- sqldf("select distinct subject,Activity_Label from melt_data")
-# nrow(Tot) is equal nrow(tidy_data)
+# To generate tidy data 
+# i wil use the package sqldf with SQL and Group by
 
 
  cln  = names(data)
@@ -131,7 +127,7 @@ data = rbind(test_data, train_data)
  
 
  cfields=" "
-
+# In the cfields we paste the dynamic sql for every column
 for (i in 4:ncln ) {
   if (i==ncln)  {
    cfields = paste(cfields,'avg(\"',cln[i],'\")',sep="")
@@ -139,7 +135,7 @@ for (i in 4:ncln ) {
    cfields = paste(cfields,'avg(\"',cln[i],'\"),',sep="") 
   } 
 }
-#cfields
+
 
  sqlst = paste('select subject,Activity_Label,',cfields,' from data group by subject,Activity_Label')
  tidy_data2 = sqldf(sqlst)
