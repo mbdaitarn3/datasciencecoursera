@@ -125,7 +125,11 @@ data = rbind(test_data, train_data)
  ncln = length(colnames(data))
  newColNames = c(colnames(data)[1],colnames(data)[3:ncln]) 
  
-
+ for (j in 1:ncln) {
+     cln[j]=paste("col",j,sep="")
+ }
+ names(data)=cln
+ 
  cfields=" "
 # In the cfields we paste the dynamic sql for every column
 for (i in 4:ncln ) {
@@ -137,11 +141,11 @@ for (i in 4:ncln ) {
 }
 
 
- sqlst = paste('select subject,Activity_Label,',cfields,' from data group by subject,Activity_Label')
- tidy_data2 = sqldf(sqlst)
- names(tidy_data2)=newColNames
+ sqlst = paste('select col1,col3,',cfields,' from data group by col1,col3')
+ tidy_data = sqldf(sqlst)
+ names(tidy_data)=newColNames
 
 
-write.table(tidy_data2, file = "./tidy_data.txt")
+write.table(tidy_data, file = "./tidy_data.txt")
 
 print(paste("End Program ",Sys.time()))
