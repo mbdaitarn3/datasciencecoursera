@@ -122,13 +122,15 @@ data = rbind(test_data, train_data)
 
 
  cln  = names(data)
+ cln_old  = names(data)
  ncln = length(colnames(data))
  newColNames = c(colnames(data)[1],colnames(data)[3:ncln]) 
  
  for (j in 1:ncln) {
      cln[j]=paste("col",j,sep="")
  }
- names(data)=cln
+ #names(data)=cln
+ setnames(data,cln_old,cln)
  
  cfields=" "
 # In the cfields we paste the dynamic sql for every column
